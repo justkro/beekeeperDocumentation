@@ -13,10 +13,18 @@ DELETE /comments/{id}/like
 ```
 GET /posts/{postid}/likes
 ```
-#### Remove Like count in the User Profile - list of changed endpoints:
+#### Remove Like count in the User Profile
+**List of changed endpoints:**
 ```
 GET /profiles/{name}
 ```
+**List of changed files**  
+> common/beekeeper/common/resources/profile.py  
+
+**Comment:**
+Like count information on the User Profile in web application would be equal zero. 
+Function return 0 like everywhere as count like.
+
 #### Remove notification - list of changed endpoints:
 ```
 POST /posts/{postid}/like
