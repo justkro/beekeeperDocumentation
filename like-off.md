@@ -1,6 +1,12 @@
-# Disable Like Count Feature Flag
+# Disable Like Counter
+## Background and Objectives
+Beekeeper core functionality - Streams - comes with an ability to “Like” a post or a comment. Some of Beekeeper customers find the idea of “liking” not in line with their company ideology. In order to acknowledge customer needs, switching off the “Like count” feature along with referencing features is enabled: 
+- Content publisher and other users must not be able to see who and how many people liked their piece of content. 
+- Allow customers to decide to disable Like count and referencing features such as Like count in the User profile, no of Likes in Slideshows, push notifications for liked content etc. 
+- Make it a setting configurable in the Meta dashboard, and activated by Beekeeper Customer Success Managers, on customer request.
 
-### Remove like count in Posts and Comments
+
+### Remove like count in Posts and Post Comments
 *List of changed endpoints:*
 ```
 POST /posts/{postid}/like
@@ -39,7 +45,7 @@ GET /profiles/{name}
 Like count information on the User Profile in web application would be equal zero. 
 Return 0 like everywhere as count like.
 
-### Remove notification
+### Disable notifications for like actions
 ```
 POST /posts/{postid}/like
 DELETE /posts/{postid}/like
@@ -53,5 +59,5 @@ DELETE /comments/{id}/like
 *Comment:*
 Notification sent skipped.
 
-### Slideshow  
+### Remove Like count information from slideshows  
 Slideshow is in direct connection with Posts and Comments. No changes.
