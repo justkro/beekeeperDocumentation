@@ -1,5 +1,4 @@
 # Disable Like Count Feature Flag
-Ponasanje kad je feature flag ukljucen. Kad je iskljucen nije nas briga.
 
 ### Remove like count in Posts and Comments
 **List of changed endpoints:**
