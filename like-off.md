@@ -1,7 +1,7 @@
 # Disable Like Count Feature Flag
 
 ### List of changed endpoints
-Remove like count in Post and Comments - list of changed endpoints:
+Remove like count in Posts and Comments - list of changed endpoints:
 ```
 POST /posts/{postid}/like
 DELETE /posts/{postid}/like
@@ -24,4 +24,6 @@ DELETE /posts/{postid}/like
 POST /comments/{id}/like
 DELETE /comments/{id}/like
 ```
- 
+
+Comment for the *Slideshow*  
+Slideshow in directly connection with Posts and Comments.
