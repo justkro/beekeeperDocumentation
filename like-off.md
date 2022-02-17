@@ -54,4 +54,4 @@ DELETE /comments/{id}/like
 Notification sent skipped.
 
 ### Slideshow  
-Slideshow in directly connection with Posts and Comments. No changes.
+Slideshow is in direct connection with Posts and Comments. No changes.
