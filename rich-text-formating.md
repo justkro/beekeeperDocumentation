@@ -2,12 +2,18 @@
 
 ## Background and Objectives
 
+Please note an extra 's' in the second header:
+```
+Content-Type: application/vnd.io.beekeeper.post+json;version=2
+```
+is used when operating on a single post
+```
+Content-Type: application/vnd.io.beekeeper.posts+json;version=2
+```
+is used when working on multiple posts
+
 
 ### Composing posts with rich texts on the web application
-As a User, I want to be able to compose posts with rich texts on the web application.
-As a User, I want to be able to mention people in my rich text post
-As a User, I want to be able to see the changes on a rich text post real time
-As a User, I want to be able to add links to my rich text post
 *List of changed endpoints:*
 ```
 POST /api/2/posts
@@ -24,10 +30,20 @@ POST /api/2/streams/{streamid}/posts
 > api/beekeeper/api/resources/wsgi_errors.py
 
 *Comment:*  
-OVDE KOMENTAR
+Changes in these endpoints are related to composing posts with rich text and mention people in rich text post.
+Compose post not supported on mobile applications. Only supports rich text in the web application.  
+Added class ```AuthenticatedPostResource```. 
+In ```is_mobile_without_rich_text``` function for mobile version newer than 7.24 add support for displaying rich text.
+```get_post_content``` function processes exceptions and checks appropriate request headers. 
+If html field is available, function calls ```get_mentioned_users_in_rich_text```, ```convert_emojis``` and ```html_to_plain```.
+It is important that these 3 functions are called in the specified order.  
+```html_to_plain``` function converts html to plain text to support legacy applications. 
+Conversion was done based on the instructions from [html formatting](https://docs.google.com/document/d/1NLqT_AH4LFckNPTEgXLO6tbgTgxGDEsaAMujrNs2xxM/edit#heading=h.j14kso86812h).  
+For better understanding HTMLConverter class please first read [documentation](https://docs.python.org/3/library/html.parser.html)  
+```is_html``` for recording the fact if the content was generated from a rich text editor.
+
 
 ### See RTF posts formatted correctly on the web application
-As a User, I want to be able to see the posts formatted correctly on the web application.
 *List of changed endpoints:*
 ```
 GET /api/2/posts
@@ -37,11 +53,13 @@ GET /api/2/streams/{streamid}/labels/{labels}/posts
 *List of changed files*  
 > api/beekeeper/api/resources/postsv2.py  
 > common/beekeeper/common/resources/posts.py
+> common/beekeeper/common/utils/html_converter.py  
+> common/beekeeper/common/subdomains/stream/model.py
 
-*Comment:*
+*Comment:*  
+Return response with html field. If post doesn't have html field, function ```text_to_html``` converts plain to rich text. 
 
 ###  Edit posts with rich text on the web application
-As a User, I want to be able to edit posts with rich text on the web application.
 *List of changed endpoints:*
 ```
 PUT /api/2/posts/{postid}
@@ -50,10 +68,11 @@ PUT /api/2/posts/{postid}
 > api/beekeeper/api/resources/postsv2.py  
 > common/beekeeper/common/resources/posts.py
 
-*Comment:*
+*Comment:*  
+Update post, added support for rich-text, add html field in response.
 
 ### See posts in rich-text formatting in web app Profile page 
-As a User, I want to see posts in rich-text formatting in my web app Profile page
+
 *List of changed endpoints:*
 ```
 GET /profiles/{name}
@@ -62,21 +81,23 @@ GET /profiles/{name}
 > api/beekeeper/api/resources/profilesv2.py  
 > common/beekeeper/common/resources/profile.py
 
-*Comment:*
+*Comment:*  
+Return html field on web app profile page if feature flag enabled.
 
 ### Translate the rich text content
-As a User, I want to be able to translate the rich text content on all platforms.
 *List of changed endpoints:*
 ```
 GET /translations/post/{post_id}
 ```
 *List of changed files*  
 > api/beekeeper/api/resources/translationsv2.py  
-> common/beekeeper/common/resources/inline_translations/translation_resource.py
-*Comment:*
+> common/beekeeper/common/resources/inline_translations/translation_resource.py  
+
+*Comment:*  
+Translate rich text. Add html variable in list for translation.
 
 ### Other endpoints
-All below mentioned endpoints support rich text when accept header is set correctly and the feature flag enabled.
+
 *List of changed endpoints:*
 ```
 POST '/posts/{postid}/subscribe
@@ -94,6 +115,7 @@ DELETE /posts/{postid}/favoritePOST /posts/{postid}/keep
 *List of changed files*  
 > api/beekeeper/api/resources/postsv2.py  
 > common/beekeeper/common/resources/posts.py  
-> common/beekeeper/common/resources/digest_mail.py
-*Comment:*
+> common/beekeeper/common/resources/digest_mail.py  
 
+*Comment:*  
+All mentioned endpoints support rich text when accept header is set correctly and the feature flag enabled.
