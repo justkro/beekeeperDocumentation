@@ -1,17 +1,15 @@
 # Rich text formatting
 
 ## Background and Objectives
+The purpose of this feature is to enable usage of rich formating for the posts and streams.
 
-Please note an extra 's' in the second header:
-```
-Content-Type: application/vnd.io.beekeeper.post+json;version=2
-```
-is used when operating on a single post
-```
-Content-Type: application/vnd.io.beekeeper.posts+json;version=2
-```
-is used when working on multiple posts
+## Feature flag
+New feature flag **rich_text_in_posts** is to be created which will controll enrolment of this functionality. 
 
+## Functionality
+A new field `html` is added to requests/responses containing the rich version of post. `text` is kept unchanged because of backward compatibity.
+A new content types are added `application/vnd.io.beekeeper.post+json;version=2` for single post and `Content-Type: application/vnd.io.beekeeper.posts+json;version=2
+` multiple of posts. These should be used in `Content-Type` and `Accept` headers in adition to feature flag being enabled for rich text to be used.
 
 ### Composing posts with rich texts on the web application
 *List of changed endpoints:*
