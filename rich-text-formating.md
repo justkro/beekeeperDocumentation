@@ -28,10 +28,10 @@ POST /api/2/streams/{streamid}/posts
 > api/beekeeper/api/resources/wsgi_errors.py
 
 *Comment:*  
-Changes in these endpoints are related to composing posts with rich text and mention people in rich text post.
-Compose post not supported on mobile applications. Only supports rich text in the web application.  
+Changes in these endpoints are related to composing posts with rich text and mentioning people in rich text posts.
+Composing post is not supported on mobile applications. Rich text composing is only supported in the web application.
 Added class ```AuthenticatedPostResource```. 
-In ```is_mobile_without_rich_text``` function for mobile version newer than 7.24 add support for displaying rich text.
+In ```is_mobile_without_rich_text``` function for mobile version newer than 7.24 added support for displaying rich text.
 ```get_post_content``` function processes exceptions and checks appropriate request headers. 
 If html field is available, function calls ```get_mentioned_users_in_rich_text```, ```convert_emojis``` and ```html_to_plain```.
 It is important that these 3 functions are called in the specified order.  
@@ -55,7 +55,7 @@ GET /api/2/streams/{streamid}/labels/{labels}/posts
 > common/beekeeper/common/subdomains/stream/model.py
 
 *Comment:*  
-Return response with html field. If post doesn't have html field, function ```text_to_html``` converts plain to rich text. 
+Return response with html field. If post doesn't have html field, function ```text_to_html``` generates one from plain text. 
 
 ###  Edit posts with rich text on the web application
 *List of changed endpoints:*
@@ -67,7 +67,7 @@ PUT /api/2/posts/{postid}
 > common/beekeeper/common/resources/posts.py
 
 *Comment:*  
-Update post, added support for rich-text, add html field in response.
+Added support for rich-text updating of post, added html field in response.
 
 ### See posts in rich-text formatting in web app Profile page 
 
@@ -80,7 +80,7 @@ GET /profiles/{name}
 > common/beekeeper/common/resources/profile.py
 
 *Comment:*  
-Return html field on web app profile page if feature flag enabled.
+Returned html field on web app profile page if feature flag enabled.
 
 ### Translate the rich text content
 *List of changed endpoints:*
